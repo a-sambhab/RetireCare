@@ -5,7 +5,10 @@ import './ChatInterface.css';
 
 const ChatInterface = () => {
   const [userInput, setUserInput] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistory, setChatHistory] = useState([{
+    author: 'RetireCare',
+    message: "Hi, I am RetireCare, your personal retirement planner, please provide me with your retirement goals so that I may help you with a successful retirement"
+  }]);
 
   const handleUserInputChange = (event) => {
     setUserInput(event.target.value);
@@ -29,7 +32,7 @@ const ChatInterface = () => {
 
   const handleResponse = async(userInput) => {
     let prompt;
-    if(chatHistory.length>=2){
+    if(chatHistory.length>=3){
         prompt = `This was your previous reply ${chatHistory[chatHistory.length-1].message}. ${userInput}`
     }
     else {
@@ -37,20 +40,20 @@ const ChatInterface = () => {
     }
     const response = await axios.post("http://localhost:5000/getPlan",{"prompt": prompt})
     console.log(response)
-    const bardResponse = {
-        author: 'Bard',
+    const retirecareResponse = {
+        author: 'RetireCare',
         message: response.data.plan,
       };
       const userMessage = {
         author: 'User',
         message: userInput,
       };
-    setChatHistory([...chatHistory, userMessage, bardResponse]);
+    setChatHistory([...chatHistory, userMessage, retirecareResponse]);
   }
 
   return (
     <div className='chat-container'>
-        
+    <div className='chat-header'>RetireCare</div>
     <div className="chat-interface">
       <div className="chat-history">
         {chatHistory.map((message) => (
