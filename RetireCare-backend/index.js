@@ -24,6 +24,12 @@ const RAW_TEXT =
 // YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
 ///////////////////////////////////////////////////////////////////////////////////
 
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors")
+dotenv.config();
+const app = express();
+const PAT = process.env.API_KEY;
 const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
 
 const stub = ClarifaiStub.grpc();
@@ -36,12 +42,6 @@ metadata.set("authorization", "Key " + PAT);
 // const fs = require("fs");
 // const fileBytes = fs.readFileSync(TEXT_FILE_LOCATION);
 
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors")
-dotenv.config();
-const app = express();
-const PAT = process.env.API_KEY;
 
 const port = process.env.PORT || 5000;
 app.use(cors());
